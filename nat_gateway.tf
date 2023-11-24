@@ -1,6 +1,6 @@
 ## NAT Gateway
 resource "aws_eip" "eip-nat" {
-    vpc = true
+    domain  = "vpc"
 
     tags = {
         Name = "eip1"
