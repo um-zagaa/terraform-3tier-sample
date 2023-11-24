@@ -1,10 +1,10 @@
 ## VPC
 resource "aws_vpc" "vpc-01" {
-    cidr_block = var.vpc_cidr
-    instance_tenancy = "default"
-    enable_dns_hostnames = true
+  cidr_block           = var.vpc_cidr
+  instance_tenancy     = "default"
+  enable_dns_hostnames = true
 
-    tags = {
-        Name = "central-network"
-    }
+  tags = {
+    Name = "central-network"
+  }
 }

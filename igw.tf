@@ -1,8 +1,8 @@
 ## Internet Gateway (IGW)
 resource "aws_internet_gateway" "igw" {
-    vpc_id = aws_vpc.vpc-01.id
+  vpc_id = aws_vpc.vpc-01.id
 
-    tags = {
-        Name = "Presentantion IGW"
-    }
+  tags = {
+    Name = "Presentantion IGW"
+  }
 }
