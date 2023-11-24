@@ -33,7 +33,7 @@ resource "aws_launch_template" "auto-scaling-group-app" {
 
   network_interfaces {
     subnet_id       = aws_subnet.private-app-subnet-1.id
-    security_groups = [aws_security_group.aws_security_group.ssh-security-group.id]
+    security_groups = [aws_security_group.ssh-security-group.id]
   }
 }
 
