@@ -20,7 +20,7 @@ resource "aws_instance" "PublicWebTemplate" {
   instance_type          = "t2.micro"
   subnet_id              = aws_subnet.public-web-subnet-1.id
   vpc_security_group_ids = [aws_security_group.web-server-security-group.id]
-  key_name               = "source_key"
+  key_name               = "terraform"
   user_data              = file("install-apache.sh")
 
   tags = {
@@ -34,7 +34,7 @@ resource "aws_instance" "private-app-template" {
   instance_type          = "t2.micro"
   subnet_id              = aws_subnet.private-app-subnet-1.id
   vpc_security_group_ids = [aws_security_group.ssh-security-group.id]
-  key_name               = "source_key"
+  key_name               = "terraform"
 
   tags = {
     Name = "app-asg"

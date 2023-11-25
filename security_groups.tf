@@ -39,26 +39,26 @@ resource "aws_security_group" "web-server-security-group" {
   vpc_id      = aws_vpc.vpc-01.id
 
   ingress {
-    description = "HTTP access"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
+    description     = "HTTP access"
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
     security_groups = ["${aws_security_group.alb-aws-security-group.id}"]
   }
 
   ingress {
-    description = "HTTPS access"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
+    description     = "HTTPS access"
+    from_port       = 443
+    to_port         = 443
+    protocol        = "tcp"
     security_groups = ["${aws_security_group.alb-aws-security-group.id}"]
   }
 
   ingress {
-    description = "SSH access"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
+    description     = "SSH access"
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
     security_groups = ["${aws_security_group.ssh-security-group.id}"]
   }
 
@@ -107,10 +107,10 @@ resource "aws_security_group" "database-security-group" {
   vpc_id      = aws_vpc.vpc-01.id
 
   ingress {
-    description = "MySQL access"
-    from_port   = 3306
-    to_port     = 3306
-    protocol    = "tcp"
+    description     = "MySQL access"
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
     security_groups = ["${aws_security_group.web-server-security-group.id}"]
   }
 

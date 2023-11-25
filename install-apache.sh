@@ -1,7 +1,11 @@
 #!/bin/bash
 
-yum update -y
-yum install -y httpd
-systemctl start httpd
-systemctl enable https
-echo "<html><body><h1>Presentantion Tier Working</h1></body></html>" > /var/www/html/index.html
+sudo su
+
+sudo yum update -y
+
+sudo yum install -y httpd
+
+sudo systemctl enable httpd
+
+sudo systemctl start httpd
