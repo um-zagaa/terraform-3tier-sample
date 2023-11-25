@@ -3,7 +3,7 @@ resource "aws_eip" "eip-nat" {
   domain = "vpc"
 
   tags = {
-    Name = "eip1"
+    Name = "eip for nat"
   }
 }
 
@@ -12,6 +12,6 @@ resource "aws_nat_gateway" "nat-gateway" {
   subnet_id     = aws_subnet.public-web-subnet-2.id
 
   tags = {
-    Name = "nat1"
+    Name = "nat gateway"
   }
 }

@@ -43,7 +43,7 @@ resource "aws_security_group" "web-server-security-group" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["${aws_security_group.alb-aws-security-group.id}"]
+    security_groups = ["${aws_security_group.alb-aws-security-group.id}"]
   }
 
   ingress {
@@ -51,7 +51,7 @@ resource "aws_security_group" "web-server-security-group" {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = ["${aws_security_group.alb-aws-security-group.id}"]
+    security_groups = ["${aws_security_group.alb-aws-security-group.id}"]
   }
 
   ingress {
@@ -59,7 +59,7 @@ resource "aws_security_group" "web-server-security-group" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["${aws_security_group.ssh-security-group.id}"]
+    security_groups = ["${aws_security_group.ssh-security-group.id}"]
   }
 
   egress {
@@ -111,7 +111,7 @@ resource "aws_security_group" "database-security-group" {
     from_port   = 3306
     to_port     = 3306
     protocol    = "tcp"
-    cidr_blocks = ["${aws_security_group.web-server-security-group.id}"]
+    security_groups = ["${aws_security_group.web-server-security-group.id}"]
   }
 
   egress {
