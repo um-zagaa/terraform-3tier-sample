@@ -23,7 +23,7 @@ resource "aws_security_group" "alb-aws-security-group" {
   egress {
     from_port   = 0
     to_port     = 0
-    protocol    = -1
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -59,13 +59,13 @@ resource "aws_security_group" "web-server-security-group" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["${aws_security_group.alb-aws-security-group.id}"]
+    cidr_blocks = ["${aws_security_group.ssh-security-group.id}"]
   }
 
   egress {
     from_port   = 0
     to_port     = 0
-    protocol    = -1
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -91,7 +91,7 @@ resource "aws_security_group" "ssh-security-group" {
   egress {
     from_port   = 0
     to_port     = 0
-    protocol    = -1
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -117,7 +117,7 @@ resource "aws_security_group" "database-security-group" {
   egress {
     from_port   = 0
     to_port     = 0
-    protocol    = -1
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
