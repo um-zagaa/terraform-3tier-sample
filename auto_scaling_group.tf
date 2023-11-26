@@ -12,7 +12,7 @@ resource "aws_launch_template" "auto-scaling-group-web" {
 }
 
 resource "aws_autoscaling_group" "auto-scaling-group-1" {
-  availability_zones = ["us-east-1a"]
+  availability_zones = ["us-east-1a", "us-east-1b"]
   desired_capacity   = 1
   max_size           = 2
   min_size           = 1
@@ -37,7 +37,7 @@ resource "aws_launch_template" "auto-scaling-group-app" {
 }
 
 resource "aws_autoscaling_group" "auto-scaling-group-2" {
-  availability_zones = ["us-east-1a"]
+  availability_zones = ["us-east-1a", "us-east-1b"]
   desired_capacity   = 1
   max_size           = 2
   min_size           = 1
