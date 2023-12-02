@@ -15,8 +15,8 @@ resource "aws_db_instance" "database-instance" {
   engine                 = "mysql"
   engine_version         = "5.7"
   instance_class         = var.database-instance-class
-  db_name                = "sampleapp3tier_api_development"
-  username               = "sampleapp3tier_api"
+  db_name                = var.db-schema
+  username               = var.db-user
   password               = var.db-password
   parameter_group_name   = "default.mysql5.7"
   skip_final_snapshot    = true

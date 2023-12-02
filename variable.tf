@@ -47,13 +47,6 @@ variable "private-db-subnet-2-cidr" {
   type        = string
 }
 
-## App Tier Security Group
-variable "ssh-locate" {
-  default     = "x.x.x.x/32" # update your location!
-  description = "SSH access ip address"
-  type        = string
-}
-
 ## DB instance
 variable "database-instance-class" {
   default     = "db.t2.micro"
@@ -68,9 +61,37 @@ variable "multi-az-deployment" {
   type        = bool
 }
 
-## DB password
-variable "db-password" {
-  default     = "********" # update your db passwordß
-  description = "The database password"
+## Bastion host connect IP address
+variable "ssh-locate" {
+  description = "SSH access ip address"
+  type        = string
+  sensitive   = true
+}
+
+## DB schema
+variable "db-schema" {
+  default     = "sampleapp3tier"
+  description = "The database schema name"
   type        = string
 }
+
+## DB user
+variable "db-user" {
+  description = "The database user"
+  type        = string
+  sensitive   = true
+}
+
+## DB password
+variable "db-password" {
+  description = "The database password"
+  type        = string
+  sensitive   = true
+}
+
+## sensitive variable setting guide
+## Create "secrets.tfvars" -> this file not added to git
+## add sensitive variable and values like below
+# ssh-locate  = "xx.xx.xx.xx/32" # Your SSH connection IP
+# db-user     = "************" # your DB user
+# db-password = "************" # your DB password
