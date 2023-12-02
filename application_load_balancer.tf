@@ -21,23 +21,37 @@ resource "aws_lb_target_group" "alb-target-group" {
 
 resource "aws_lb_target_group_attachment" "web-attachment" {
   target_group_arn = aws_lb_target_group.alb-target-group.arn
-  target_id        = aws_instance.PublicWebTemplate.id
+  target_id        = aws_instance.public-web-template.id
   port             = 80
 }
 
 ## Create a listener on port 80 with redirect action
+# resource "aws_lb_listener" "alb-http-listener" {
+#   load_balancer_arn = aws_lb.application-load-balancer.arn
+#   port              = 80
+#   protocol          = "HTTP"
+
+#   default_action {
+#     type = "redirect"
+
+#     redirect {
+#       port        = 443
+#       protocol    = "HTTPS"
+#       status_code = "HTTP_301"
+#     }
+#   }
+# }
+
+## Create a listener on port 433 with forward action to target group
 resource "aws_lb_listener" "alb-http-listener" {
   load_balancer_arn = aws_lb.application-load-balancer.arn
-  port              = 80
-  protocol          = "HTTP"
+  # port              = 443
+  port = 80
+  # protocol          = "HTTPS"
+  protocol = "HTTP"
 
   default_action {
-    type = "redirect"
-
-    redirect {
-      port        = 443
-      protocol    = "HTTPS"
-      status_code = "HTTP_301"
-    }
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.alb-target-group.arn
   }
 }
