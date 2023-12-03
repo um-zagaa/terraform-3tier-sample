@@ -25,6 +25,19 @@ resource "aws_lb_target_group_attachment" "web-attachment" {
   port             = 80
 }
 
+resource "aws_lb_target_group" "alb-target-group-middleware" {
+  name     = "alb-target-group-middleware"
+  port     = 3000
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.vpc-01.id
+}
+
+resource "aws_lb_target_group_attachment" "web-middleware-attachment" {
+  target_group_arn = aws_lb_target_group.alb-target-group-middleware.arn
+  target_id        = aws_instance.public-web-template.id
+  port             = 3000
+}
+
 ## Create a listener on port 80 with redirect action
 # resource "aws_lb_listener" "alb-http-listener" {
 #   load_balancer_arn = aws_lb.application-load-balancer.arn
@@ -45,13 +58,24 @@ resource "aws_lb_target_group_attachment" "web-attachment" {
 ## Create a listener on port 433 with forward action to target group
 resource "aws_lb_listener" "alb-http-listener" {
   load_balancer_arn = aws_lb.application-load-balancer.arn
+  port              = 80
+  protocol          = "HTTP"
   # port              = 443
-  port = 80
   # protocol          = "HTTPS"
-  protocol = "HTTP"
 
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.alb-target-group.arn
+  }
+}
+
+resource "aws_lb_listener" "alb-http-listener-middleware" {
+  load_balancer_arn = aws_lb.application-load-balancer.arn
+  port              = 3000
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.alb-target-group-middleware.arn
   }
 }

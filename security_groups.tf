@@ -22,6 +22,15 @@ resource "aws_security_group" "alb-aws-security-group" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  # Allow incoming middleware from All IP
+  ingress {
+    description = "Middleware access"
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   # Allow outgoing all to internet group
   egress {
     from_port   = 0
@@ -95,6 +104,15 @@ resource "aws_security_group" "web-server-security-group" {
     security_groups = ["${aws_security_group.alb-aws-security-group.id}"]
   }
 
+  # Allow incoming middleware from ALB SG
+  ingress {
+    description     = "Middleware access"
+    from_port       = 3000
+    to_port         = 3000
+    protocol        = "tcp"
+    security_groups = ["${aws_security_group.alb-aws-security-group.id}"]
+  }
+
   # Allow incoming SSH from Bastion Host
   ingress {
     description     = "SSH access"
@@ -122,23 +140,32 @@ resource "aws_security_group" "app-server-security-group" {
   description = "Enable HTTP/HTTPS access on port 80/443 via Presentantion Tier and SSH via SSH SG"
   vpc_id      = aws_vpc.vpc-01.id
 
-  # Allow incoming HTTP from Presentantion Tier SG
+  # Allow incoming TCP 3000 port from Presentantion Tier SG
   ingress {
-    description     = "HTTP access"
-    from_port       = 80
-    to_port         = 80
+    description     = "Nest js 3000 port access"
+    from_port       = 3000
+    to_port         = 3000
     protocol        = "tcp"
     security_groups = ["${aws_security_group.web-server-security-group.id}"]
   }
 
-  # Allow incoming HTTPS from Presentantion Tier SG
-  ingress {
-    description     = "HTTPS access"
-    from_port       = 443
-    to_port         = 443
-    protocol        = "tcp"
-    security_groups = ["${aws_security_group.web-server-security-group.id}"]
-  }
+  # # Allow incoming HTTP from Presentantion Tier SG
+  # ingress {
+  #   description     = "HTTP access"
+  #   from_port       = 80
+  #   to_port         = 80
+  #   protocol        = "tcp"
+  #   security_groups = ["${aws_security_group.web-server-security-group.id}"]
+  # }
+
+  # # Allow incoming HTTPS from Presentantion Tier SG
+  # ingress {
+  #   description     = "HTTPS access"
+  #   from_port       = 443
+  #   to_port         = 443
+  #   protocol        = "tcp"
+  #   security_groups = ["${aws_security_group.web-server-security-group.id}"]
+  # }
 
   # Allow incoming SSH from Bastion Host
   ingress {
