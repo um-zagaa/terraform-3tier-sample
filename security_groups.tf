@@ -59,14 +59,6 @@ resource "aws_security_group" "ssh-security-group" {
     cidr_blocks = ["${var.ssh-locate}"]
   }
 
-  # Allow outgoing MySQL to DB security group
-  # egress {
-  #   from_port       = 3306
-  #   to_port         = 3306
-  #   protocol        = "tcp"
-  #   security_groups = ["${aws_security_group.database-security-group}"]
-  # }
-
   # Allow outgoing all to internet group
   egress {
     from_port   = 0
@@ -80,9 +72,9 @@ resource "aws_security_group" "ssh-security-group" {
   }
 }
 
-## SG for Presentantion Tier
+## SG for Presentation Tier
 resource "aws_security_group" "web-server-security-group" {
-  name        = "Presentantion Tier Security Group"
+  name        = "Presentation Tier Security Group"
   description = "Enable HTTP/HTTPS access on port 80/443 via ALB and SSH via SSH SG"
   vpc_id      = aws_vpc.vpc-01.id
 
@@ -131,16 +123,16 @@ resource "aws_security_group" "web-server-security-group" {
   }
 
   tags = {
-    Name = "Presentantion Tier Security Group"
+    Name = "Presentation Tier Security Group"
   }
 }
 
 ## SG for Application Tier
 resource "aws_security_group" "app-server-security-group" {
-  description = "Enable HTTP/HTTPS access on port 80/443 via Presentantion Tier and SSH via SSH SG"
+  description = "Enable HTTP/HTTPS access on port 80/443 via Presentation Tier and SSH via SSH SG"
   vpc_id      = aws_vpc.vpc-01.id
 
-  # Allow incoming TCP 3000 port from Presentantion Tier SG
+  # Allow incoming TCP 3000 port from Presentation Tier SG
   ingress {
     description     = "Nest js 3000 port access"
     from_port       = 3000
@@ -148,24 +140,6 @@ resource "aws_security_group" "app-server-security-group" {
     protocol        = "tcp"
     security_groups = ["${aws_security_group.web-server-security-group.id}"]
   }
-
-  # # Allow incoming HTTP from Presentantion Tier SG
-  # ingress {
-  #   description     = "HTTP access"
-  #   from_port       = 80
-  #   to_port         = 80
-  #   protocol        = "tcp"
-  #   security_groups = ["${aws_security_group.web-server-security-group.id}"]
-  # }
-
-  # # Allow incoming HTTPS from Presentantion Tier SG
-  # ingress {
-  #   description     = "HTTPS access"
-  #   from_port       = 443
-  #   to_port         = 443
-  #   protocol        = "tcp"
-  #   security_groups = ["${aws_security_group.web-server-security-group.id}"]
-  # }
 
   # Allow incoming SSH from Bastion Host
   ingress {
@@ -175,14 +149,6 @@ resource "aws_security_group" "app-server-security-group" {
     protocol        = "tcp"
     security_groups = ["${aws_security_group.ssh-security-group.id}"]
   }
-
-  # Allow outgoing MySQL to DB security group
-  # egress {
-  #   from_port       = 3306
-  #   to_port         = 3306
-  #   protocol        = "tcp"
-  #   security_groups = ["${aws_security_group.database-security-group}"]
-  # }
 
   # Allow outgoing all to internet group
   egress {

@@ -14,7 +14,7 @@ data "aws_ami" "amazon_linux_2" {
   }
 }
 
-## EC2 instance Presentantion Tier
+## EC2 instance Presentation Tier
 resource "aws_instance" "public-web-template" {
   ami                    = data.aws_ami.amazon_linux_2.id
   instance_type          = "t2.micro"
