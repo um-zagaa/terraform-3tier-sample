@@ -15,3 +15,6 @@ Terraform 3 tier sample
 
 ## Terraform execute plan to cloud with secret values
 `terraform apply -var-file="secrets.tfvars"`
+
+## Terraform destroy all resource created by terraform
+`terraform destroy -var-file="secrets.tfvars"`

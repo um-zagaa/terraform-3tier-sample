@@ -14,13 +14,13 @@ resource "aws_security_group" "alb-aws-security-group" {
   }
 
   # Allow incoming HTTPS from All IP
-  ingress {
-    description = "HTTPS access"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+  # ingress {
+  #   description = "HTTPS access"
+  #   from_port   = 443
+  #   to_port     = 443
+  #   protocol    = "tcp"
+  #   cidr_blocks = ["0.0.0.0/0"]
+  # }
 
   # Allow incoming middleware from All IP
   ingress {
@@ -83,15 +83,6 @@ resource "aws_security_group" "web-server-security-group" {
     description     = "HTTP access"
     from_port       = 80
     to_port         = 80
-    protocol        = "tcp"
-    security_groups = ["${aws_security_group.alb-aws-security-group.id}"]
-  }
-
-  # Allow incoming HTTPS from ALB SG
-  ingress {
-    description     = "HTTPS access"
-    from_port       = 443
-    to_port         = 443
     protocol        = "tcp"
     security_groups = ["${aws_security_group.alb-aws-security-group.id}"]
   }
