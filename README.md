@@ -1,5 +1,20 @@
-# terraform-3tier-sample
-Terraform 3 tier sample
+# Terraform-3tier-sample project
+Create 3 tier sample infra on AWS with Terraform  
+
+## Infra structure
+You infra structure will created as below.  
+You can change with your own infra structure configuration.  
+![Infra structure image](<images/3 Tier Diagram-Infra.drawio.png>)
+
+
+## Infra security
+You infra security will created as below.  
+You can change with your own security configuruation.  
+![Infra security image](<images/3 Tier Diagram-Communication and security.drawio.png>)
+
+# How to use
+You will need to install terraform on you local computer.  
+And setup AWS access key (You can use AWS CLI or just create your own).  
 
 ## Create secret variables file that not registerd on git
 Create `secrets.tfvars` file
